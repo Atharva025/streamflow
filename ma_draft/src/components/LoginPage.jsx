@@ -69,7 +69,7 @@ const LoginPage = () => {
   };
 
   useEffect(() => {
-    emailjs.init("6IZXwTKZ7eDW8was5"); // Replace with your EmailJS user ID
+    emailjs.init(import.meta.env.VITE_CLIENT_JS_PUBLIC_KEY);
   }, []);
 
   const handleForgotPassword = async (e) => {
@@ -95,8 +95,8 @@ const LoginPage = () => {
         };
 
         await emailjs.send(
-          'service_isfrhts',      // Your EmailJS service ID
-          'template_dckqbg5',     // Your EmailJS template ID
+          import.meta.env.VITE_CLIENT_JS_SERVICE_ID,
+          import.meta.env.VITE_CLIENT_JS_TEMPLATE_ID,
           templateParams
         );
 
