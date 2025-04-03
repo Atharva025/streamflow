@@ -350,7 +350,7 @@ const VideoStreamPage = () => {
               </div>
             </div>
 
-            
+
           </motion.div>
 
           {/* Sidebar - Recommended Videos */}
@@ -367,34 +367,35 @@ const VideoStreamPage = () => {
             <div className="space-y-4">
               {/* Video Recommendation Cards */}
 
-              {videos.map((video) => (
-                <div key={video.id || video.uniqueId} className="flex items-center bg-gray-800 bg-opacity-50 rounded-lg p-3 hover:bg-gray-700 transition-all cursor-pointer">
-                  <Link
-                    to={`/watch?id=${video.uniqueId}&title=${encodeURIComponent(video.title || "")}&description=${encodeURIComponent(video.description || "")}`}
-                    className="w-full flex items-center"
-                  >
-                    <img
-                      src={`/videos/${video.uniqueId}/thumbnail`}
-                      alt={video.title || "Video thumbnail"}
-                      className="w-16 h-16 object-cover rounded-lg mr-4"
-                      onError={(e) => {
-                        e.target.onerror = null; // Prevent infinite loop if fallback also fails
-                        e.target.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGgkRAAfg1oyw9-6jmMmtB21wxe-QXMWIuPg&s";
-                      }}
-                    />
-                    <div className="flex flex-col space-y-1.5 py-0.5 flex-1 overflow-hidden">
-                      <h4 className="text-sm font-semibold text-blue-300 line-clamp-2 leading-snug hover:text-blue-200 transition-colors">
-                        {video.title || "Untitled Video"}
-                      </h4>
-                      <div className="flex flex-col">
-                        <p className="text-xs text-gray-500 line-clamp-1 leading-relaxed">
-                          {video.description || "No description available"}
-                        </p>
+              {videos.filter(video => video.uniqueId !== id)
+                .map((video) => (
+                  <div key={video.id || video.uniqueId} className="flex items-center bg-gray-800 bg-opacity-50 rounded-lg p-3 hover:bg-gray-700 transition-all cursor-pointer">
+                    <Link
+                      to={`/watch?id=${video.uniqueId}&title=${encodeURIComponent(video.title || "")}&description=${encodeURIComponent(video.description || "")}`}
+                      className="w-full flex items-center"
+                    >
+                      <img
+                        src={`/videos/${video.uniqueId}/thumbnail`}
+                        alt={video.title || "Video thumbnail"}
+                        className="w-16 h-16 object-cover rounded-lg mr-4"
+                        onError={(e) => {
+                          e.target.onerror = null; // Prevent infinite loop if fallback also fails
+                          e.target.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGgkRAAfg1oyw9-6jmMmtB21wxe-QXMWIuPg&s";
+                        }}
+                      />
+                      <div className="flex flex-col space-y-1.5 py-0.5 flex-1 overflow-hidden">
+                        <h4 className="text-sm font-semibold text-blue-300 line-clamp-2 leading-snug hover:text-blue-200 transition-colors">
+                          {video.title || "Untitled Video"}
+                        </h4>
+                        <div className="flex flex-col">
+                          <p className="text-xs text-gray-500 line-clamp-1 leading-relaxed">
+                            {video.description || "No description available"}
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                  </Link>
-                </div>
-              ))}
+                    </Link>
+                  </div>
+                ))}
             </div>
 
 
