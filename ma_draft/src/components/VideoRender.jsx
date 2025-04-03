@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
@@ -214,8 +214,40 @@ const VideoRender = () => {
 };
 
 // Video Card Component
+// Update the VideoCard component
+
 const VideoCard = ({ video }) => {
-    // Component code unchanged
+    const [duration, setDuration] = useState("--:--");
+    const videoRef = useRef(null);
+
+    // Extract video duration when component mounts
+    useEffect(() => {
+        const videoElement = document.createElement("video");
+
+        // Set up the metadata loaded event
+        videoElement.onloadedmetadata = () => {
+            const videoDurationSeconds = videoElement.duration;
+            setDuration(formatDuration(videoDurationSeconds));
+        };
+
+        // Set up error handling
+        videoElement.onerror = () => {
+            console.error("Error loading video metadata");
+            setDuration("--:--");
+        };
+
+        // Start loading the video to get metadata
+        videoElement.preload = "metadata";
+        videoElement.src = `/stream/streamVideo/${video.uniqueId}`;
+
+        // Clean up function
+        return () => {
+            videoElement.onloadedmetadata = null;
+            videoElement.onerror = null;
+            videoElement.src = "";
+        };
+    }, [video.uniqueId]);
+
     return (
         <motion.div
             className="bg-black bg-opacity-60 backdrop-blur-sm rounded-xl overflow-hidden shadow-lg border border-gray-800 hover:border-blue-500 transition-all duration-300"
@@ -231,10 +263,15 @@ const VideoCard = ({ video }) => {
                         alt={video.title || "Video thumbnail"}
                         className="w-full aspect-video object-cover"
                         onError={(e) => {
-                            e.target.onerror = null; // Prevent infinite loop if fallback also fails
+                            e.target.onerror = null;
                             e.target.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGgkRAAfg1oyw9-6jmMmtB21wxe-QXMWIuPg&s";
                         }}
                     />
+
+                    {/* Duration badge */}
+                    <div className="absolute bottom-2 right-2 bg-black bg-opacity-70 text-white text-xs px-2 py-1 rounded">
+                        {duration}
+                    </div>
                 </div>
 
                 <div className="p-4">
@@ -248,19 +285,18 @@ const VideoCard = ({ video }) => {
     );
 };
 
-// Helper functions unchanged
-const formatDate = (dateString) => {
-    if (!dateString) return "Unknown date";
-
-    const options = { year: 'numeric', month: 'short', day: 'numeric' };
-    return new Date(dateString).toLocaleDateString(undefined, options);
-};
-
+// Make sure this helper function is properly defined
 const formatDuration = (seconds) => {
-    if (!seconds) return "0:00";
+    if (!seconds || isNaN(seconds)) return "0:00";
 
     const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const remainingMinutes = minutes % 60;
     const remainingSeconds = Math.floor(seconds % 60);
+
+    if (hours > 0) {
+        return `${hours}:${remainingMinutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+    }
 
     return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
 };
