@@ -251,7 +251,7 @@ const Profile = () => {
                                                                 className="w-full h-full object-cover"
                                                                 onError={(e) => {
                                                                     e.target.onerror = null;
-                                                                    e.target.src = "https://via.placeholder.com/640x360.png?text=No+Thumbnail";
+                                                                    e.target.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGgkRAAfg1oyw9-6jmMmtB21wxe-QXMWIuPg&s";
                                                                 }}
                                                             />
                                                         </div>

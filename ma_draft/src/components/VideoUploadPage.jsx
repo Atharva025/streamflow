@@ -15,6 +15,9 @@ const VideoUploadPage = () => {
     const [thumbnail, setThumbnail] = useState(null);
     const [thumbnailPreview, setThumbnailPreview] = useState(null);
 
+    // Set description character limit
+    const maxDescriptionLength = 500;
+
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -48,10 +51,16 @@ const VideoUploadPage = () => {
         setThumbnailPreview(null);
     };
 
-
-
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
+    };
+
+    const handleDescriptionChange = (e) => {
+        const text = e.target.value;
+        // Only update if under the character limit
+        if (text.length <= maxDescriptionLength) {
+            setDescription(text);
+        }
     };
 
     const handleSubmit = async (e) => {
@@ -59,6 +68,11 @@ const VideoUploadPage = () => {
 
         if (!file || !title) {
             setError("Please provide a title and select a video file");
+            return;
+        }
+
+        if (description.length > maxDescriptionLength) {
+            setError(`Description must be ${maxDescriptionLength} characters or less`);
             return;
         }
 
@@ -232,11 +246,15 @@ const VideoUploadPage = () => {
                                 id="description"
                                 rows="4"
                                 value={description}
-                                onChange={(e) => setDescription(e.target.value)}
+                                onChange={handleDescriptionChange}
                                 placeholder="Tell viewers more about your video..."
+                                maxLength={maxDescriptionLength}
                                 className="mt-1 block w-full px-4 py-2 rounded-md bg-gray-800 border border-gray-600 
                                 text-gray-100 placeholder-gray-400 focus:outline-none focus:border-blue-500"
                             ></textarea>
+                            <p className="text-xs text-gray-400 text-right mt-1">
+                                {description.length}/{maxDescriptionLength} characters
+                            </p>
                         </div>
 
                         {/* Drag & Drop / File Upload Section */}
