@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { FaPlay, FaUpload, FaBolt, FaRocket, FaGlobe, FaShieldAlt, FaChevronRight } from "react-icons/fa";
+import { FaPlay, FaUpload, FaShieldAlt } from "react-icons/fa";
 
 const HomePage = () => {
   return (
@@ -18,9 +18,11 @@ const HomePage = () => {
           </Link>
         </div>
       </nav>
+
       {/* Hero Section */}
       <div className="flex flex-col items-center justify-center py-20 md:py-28 px-8 text-center relative">
         {/* Optional subtle background pattern */}
+        
 
         <h1 className="text-5xl md:text-6xl font-bold mb-8 leading-tight">
           <span className="text-white">Welcome to </span>
@@ -35,27 +37,31 @@ const HomePage = () => {
 
         {/* Call-to-Action Buttons */}
         <div className="mt-12 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
-          <Link
-            to="/login"
-            className="flex items-center px-8 py-3 text-lg font-medium text-white bg-gradient-to-r from-blue-600 to-blue-700 rounded-lg hover:from-blue-500 hover:to-blue-600 transition-colors shadow-lg"
+          <a
+            href="/login"
+            className="flex items-center justify-center px-8 py-3 text-lg font-medium text-white bg-gradient-to-r from-blue-600 to-blue-700 rounded-lg hover:from-blue-500 hover:to-blue-600 transition-colors shadow-lg cursor-pointer"
           >
             <FaPlay className="mr-2" />
             Start Watching
-          </Link>
-          <Link
-            to="/login"
-            className="flex items-center px-8 py-3 text-lg font-medium text-white bg-gradient-to-r from-purple-600 to-purple-700 rounded-lg hover:from-purple-500 hover:to-purple-600 transition-colors shadow-lg"
+          </a>
+          <a
+            href="/login"
+            className="flex items-center justify-center px-8 py-3 text-lg font-medium text-white bg-gradient-to-r from-purple-600 to-purple-700 rounded-lg hover:from-purple-500 hover:to-purple-600 transition-colors shadow-lg cursor-pointer"
           >
             <FaUpload className="mr-2" />
             Upload Content
-          </Link>
+          </a>
         </div>
       </div>
 
-      {/* Wave Divider */}
+      {/* Wave Divider - Fixed SVG path */}
       <div className="relative h-24 overflow-hidden">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className="absolute w-full h-full">
-          <path fill="#111827" fillOpacity="1" d="M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,218.7C672,235,768,245,864,234.7C960,224,1056,192,1152,176C1248,160,1344,160,1392,160L1440,160L1440,320L1392,320C1344,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+          <path
+            fill="#111827"
+            fillOpacity="1"
+            d="M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,218.7C672,235,768,245,864,234.7C960,224,1056,192,1152,176C1248,160,1344,160,1392,160L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z">
+          </path>
         </svg>
       </div>
 
@@ -113,14 +119,16 @@ const HomePage = () => {
         </div>
       </footer>
 
-      {/* Add a CSS class for the background grid pattern */}
-      <style jsx>{`
-        .bg-grid-pattern {
-          background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-                            linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-          background-size: 30px 30px;
-        }
-      `}</style>
+      {/* Add a CSS class for the background grid pattern - Fixed style implementation */}
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          .bg-grid-pattern {
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
+          }
+        `
+      }} />
     </div>
   );
 };
