@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaCloudUploadAlt, FaPlay, FaUser, FaSignOutAlt, FaChevronDown } from 'react-icons/fa';
+import { FaCloudUploadAlt, FaPlay, FaUser, FaSignOutAlt, FaChevronDown, FaSearch } from 'react-icons/fa';
 
 const VideoRender = () => {
     const [videos, setVideos] = useState([]);
@@ -10,6 +10,7 @@ const VideoRender = () => {
     const [error, setError] = useState(null);
     const [userName, setUserName] = useState('');
     const [showProfileMenu, setShowProfileMenu] = useState(false);
+    const [searchTerm, setSearchTerm] = useState(''); // State for search term
     const navigate = useNavigate();
     const userMenuRef = React.useRef(null);
 
@@ -75,6 +76,11 @@ const VideoRender = () => {
         // Redirect to login page
         navigate("/login");
     };
+
+    // Filter videos based on search term
+    const filteredVideos = videos.filter(video =>
+        video.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     if (loading) {
         return (
@@ -170,6 +176,18 @@ const VideoRender = () => {
                 <div className="flex flex-col md:flex-row justify-between items-center mb-8">
                     <h1 className="text-3xl font-bold text-blue-300 mb-4 md:mb-0">Available Videos</h1>
 
+                    {/* Search Bar */}
+                    <div className="relative">
+                        <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                        <input
+                            type="text"
+                            placeholder="Search videos..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className="w-full pl-10 pr-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 transition-colors"
+                        />
+                    </div>
+
                     {/* Upload Video Button */}
                     <motion.button
                         className="bg-blue-600 hover:bg-blue-500 text-white px-6 py-3 rounded-full 
@@ -185,6 +203,13 @@ const VideoRender = () => {
                         <span className="font-medium">Upload Video</span>
                     </motion.button>
                 </div>
+
+                {/* No Results Message */}
+                {searchTerm && filteredVideos.length === 0 && (
+                    <div className="text-center text-gray-400 mt-8">
+                        No videos found matching "{searchTerm}"
+                    </div>
+                )}
 
                 {videos.length === 0 ? (
                     <div className="flex flex-col items-center justify-center py-16 bg-gray-800 bg-opacity-40 rounded-xl">
@@ -203,7 +228,7 @@ const VideoRender = () => {
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" key={videos.length}>
-                        {videos.map((video) => (
+                        {filteredVideos.map((video) => (
                             <VideoCard key={video.uniqueId || video.id} video={video} />
                         ))}
                     </div>

@@ -213,30 +213,9 @@ const RegisterPage = () => {
                         </Link>
                     </div>
 
-                    {/* Divider */}
-                    <div className="my-6 flex items-center">
-                        <div className="flex-grow border-t border-gray-700"></div>
-                        <span className="mx-4 text-sm text-gray-400">OR</span>
-                        <div className="flex-grow border-t border-gray-700"></div>
-                    </div>
+                    
 
-                    {/* Google Auth Button */}
-                    <div className="text-center">
-                        <motion.button
-                            type="button"
-                            className="w-full py-2 rounded-md bg-red-600 text-white font-semibold hover:bg-red-500 transition duration-300 flex items-center justify-center"
-                            whileHover={{ scale: 1.03 }}
-                            whileTap={{ scale: 0.97 }}
-                        >
-                            <img
-                                src="https://cdn-icons-png.flaticon.com/512/2702/2702602.png"
-                                alt="Google logo"
-                                className="w-5 h-5 mr-2"
-                                style={{ filter: "brightness(0) invert(1)" }}
-                            />
-                            Register with Google
-                        </motion.button>
-                    </div>
+                    
                 </motion.div>
             </div>
         </div>
