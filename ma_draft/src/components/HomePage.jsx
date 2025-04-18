@@ -22,7 +22,7 @@ const HomePage = () => {
       {/* Hero Section */}
       <div className="flex flex-col items-center justify-center py-20 md:py-28 px-8 text-center relative">
         {/* Optional subtle background pattern */}
-        
+
 
         <h1 className="text-5xl md:text-6xl font-bold mb-8 leading-tight">
           <span className="text-white">Welcome to </span>

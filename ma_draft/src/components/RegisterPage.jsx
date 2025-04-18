@@ -212,9 +212,6 @@ const RegisterPage = () => {
                             Log in
                         </Link>
                     </div>
-
-                    
-
                     
                 </motion.div>
             </div>

@@ -10,5 +10,4 @@ public interface VideoService {
     List<Video> getAllVideos();
     List<Video> getVideosByUploader(String email);
     Optional<Video> getVideoByUniqueId(String uniqueId);
-    // Other methods...
 }

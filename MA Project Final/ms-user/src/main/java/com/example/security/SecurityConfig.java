@@ -19,10 +19,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
                 .oauth2Login(oauth2 -> oauth2
                         .loginPage("/login")
-                        .defaultSuccessUrl("/render", true) // Redirect to your videos page after login
+                        .defaultSuccessUrl("/render", true)
                         .failureUrl("/login?error=true")
                         .userInfoEndpoint(userInfo -> userInfo
-                                .userService(customOAuth2UserService)) // Use a custom service to process OAuth2 user details
+                                .userService(customOAuth2UserService))
                 )
                 .logout(logout -> logout
                         .logoutSuccessUrl("/login?logout=true")

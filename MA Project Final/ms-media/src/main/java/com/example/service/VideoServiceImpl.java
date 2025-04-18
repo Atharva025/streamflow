@@ -27,10 +27,8 @@ public class VideoServiceImpl implements VideoService {
             video.setDescription(description);
             video.setUploaderEmail(email);
 
-            // Set video data
             video.setVideoData(file.getBytes());
 
-            // Set thumbnail data if provided
             if (thumbnail != null && !thumbnail.isEmpty()) {
                 video.setThumbnailData(thumbnail.getBytes());
                 video.setThumbnailContentType(thumbnail.getContentType());

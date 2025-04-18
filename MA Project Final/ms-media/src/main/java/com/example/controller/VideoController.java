@@ -14,7 +14,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/videos")
-// Add this if you need CORS support
 public class VideoController {
     private final VideoService videoService;
 
@@ -30,7 +29,6 @@ public class VideoController {
             @RequestPart("file") MultipartFile file,
             @RequestPart(value = "thumbnail", required = false) MultipartFile thumbnail) {
 
-        // Call the updated service method that handles thumbnail
         String response = videoService.uploadVideo(title, description, email, file, thumbnail);
         return ResponseEntity.ok(response);
     }
@@ -50,7 +48,7 @@ public class VideoController {
         Optional<Video> videoOptional = videoService.getVideoByUniqueId(uniqueId);
 
         if (videoOptional.isPresent()) {
-            Video video = videoOptional.get(); // Unwrapping Optional
+            Video video = videoOptional.get();
             if (video.getVideoData() != null) {
                 return ResponseEntity.ok()
                         .contentType(MediaType.APPLICATION_OCTET_STREAM)
@@ -62,7 +60,6 @@ public class VideoController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
-    // New endpoint to get thumbnail by video uniqueId
     @GetMapping("/{uniqueId}/thumbnail")
     public ResponseEntity<byte[]> getVideoThumbnail(@PathVariable String uniqueId) {
         Optional<Video> videoOptional = videoService.getVideoByUniqueId(uniqueId);
@@ -70,7 +67,6 @@ public class VideoController {
         if (videoOptional.isPresent()) {
             Video video = videoOptional.get();
             if (video.getThumbnailData() != null) {
-                // If you stored the content type, use it. Otherwise, use a default.
                 MediaType mediaType = video.getThumbnailContentType() != null
                         ? MediaType.parseMediaType(video.getThumbnailContentType())
                         : MediaType.IMAGE_JPEG;
@@ -81,7 +77,6 @@ public class VideoController {
             }
         }
 
-        // If no thumbnail is available, return 404
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 }

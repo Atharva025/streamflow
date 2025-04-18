@@ -13,7 +13,7 @@ import org.hibernate.annotations.GenericGenerator;
 public class Video {
 
     @Id
-    @GeneratedValue(generator = "UUID") // Generate UUID
+    @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(updatable = false, nullable = false, unique = true)
     private String uniqueId;
@@ -25,10 +25,8 @@ public class Video {
     @Lob
     private byte[] videoData;
 
-    // Added thumbnail field
     @Lob
     private byte[] thumbnailData;
 
-    // Optional: Add thumbnail content type
     private String thumbnailContentType;
 }
